@@ -1,20 +1,20 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-  Search
+  Search results
 {% endblock %}
 
 {% block body %}
-  <h1>Search result for {{ query }}</h1>
-  <ul>
-    {% for result in results %}
+  <h1>Search results for {{ query }}</h1>
+  {% if entries %}
+    {% for entry in entries %}
+      <ul>
         <li>
-          <a href="{% url 'wiki_entry' title=result %}">{{ result }}</a>
+          <a href="{% url 'entry' title=entry %}">{{entry}}</a>
         </li>
-      {% empty %}
-        <li>No results found matching query</li>
-      {% endfor %}
-    </ul>
-  
-  <a href="{% url 'index' %}" class="btn btn-primary">Back to Home</a>
+      </ul>
+    {% endfor %}
+  {% else %}
+    <div class="alert alert-danger">The requested page was not found.</div>
+  {% endif %}
 {% endblock %}

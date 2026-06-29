@@ -1,25 +1,23 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-  New Page
+  Create new page
 {% endblock %}
 
 {% block body %}
+  <h1>Create New Page</h1>
+    {% if error %}
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+    {% endif %}
+    <form action="{% url 'new_page' %}" method="post" class="form-group">
+      {% csrf_token %}
 
-  <h2>Create New Encyclopedia Page</h2>
+      {{ form.as_p }}
 
-  <form action="{% url 'new_page' %}" method="post">
-    {% csrf_token %}
-    <div style="margin-bottom: 15px;">
-      <label for="title">Title:</label><br>
-      <input type="text" name="title" id="title" required placeholder="Enter Page Titile...">
-    </div>
-    <div style="margin-bottom: 15px;">
-      <label for="content">Markdown Content:</label><br>
-      <textarea name="content" id="content" rows="10" cols="50" required placeholder="Write your content in markdown here..."></textarea>
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Save Page</button>
-  </form>
+      <button type="submit" class="btn btn-primary">Save</button>
 
+      <a href="{% url 'new_page' %}" class="btn btn-secondary">Cancel</a>
+    </form>
 {% endblock %}
